@@ -18,4 +18,13 @@ public interface UserService {
    * @param user User
    */
   public void save(User user);
+
+  /**
+   * Check that the User with the given id does not have any books on loan
+   * and delete the User.
+   *
+   * @param id User id
+   * @return String containing error messages.
+   */
+  public String delete(Long id);
 }

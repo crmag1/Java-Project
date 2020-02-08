@@ -22,10 +22,14 @@
         <td th:text="${tempUser.lastName}"></td>
         <td th:text="${tempUser.address}"></td>
         <td>
+          <a th:href="@{/user/delete(userId=${tempUser.id})}" class="btn btn-sm btn-danger">
+            Delete
+          </a>
         </td>
       </tr>
     </tbody>
   </table>
+  <div class="alert alert-danger" th:if="${userHasLoansError}" th:text="${userHasLoansError}"></div>
   <hr>
   <a th:href="@{/dashboard}" class="btn btn-dark btn-sm mb-3">Return</a>
 </div>

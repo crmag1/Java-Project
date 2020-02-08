@@ -5,10 +5,13 @@ import com.persado.assignment.project.service.UserService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/user")
@@ -60,5 +63,31 @@ public class UserController {
   public String save(@ModelAttribute("user") User user) {
     userService.save(user);
     return "redirect:/dashboard";
+  }
+
+  /**
+   * Delete the User with the given id.
+   * Also return error messages, if any.
+   *
+   * @param id User id
+   * @return ModelAndView
+   */
+  @GetMapping("/delete")
+  public ModelAndView delete(@RequestParam("userId") Long id) {
+    ModelAndView model = new ModelAndView();
+    
+    String errors = userService.delete(id);
+    if(!StringUtils.isEmpty(errors)) {
+      model.addObject("userHasLoansError", "Can't be deleted. "
+        + "The User has currently " + errors + " on loan. ");
+    }
+
+    // Get all the Users
+    List<User> users = userService.findAll();
+    // Add the users object to the Model
+    model.addObject("users", users);
+
+    model.setViewName("manageUsersForm");
+    return model;
   }
 }
