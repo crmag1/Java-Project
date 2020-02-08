@@ -75,7 +75,7 @@ public class UserController {
   @GetMapping("/delete")
   public ModelAndView delete(@RequestParam("userId") Long id) {
     ModelAndView model = new ModelAndView();
-    
+
     String errors = userService.delete(id);
     if(!StringUtils.isEmpty(errors)) {
       model.addObject("userHasLoansError", "Can't be deleted. "

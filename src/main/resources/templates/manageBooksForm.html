@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container">
-  <h3>Library Management - Manage Book</h3>
+  <h3>Library Management - Manage Books</h3>
   </br>
   <table class="table table-bordered table-striped">
     <thead class="thead-dark">
@@ -16,6 +16,7 @@
       <th>ISBN</th>
       <th>Total copies</th>
       <th>Copies on loan</th>
+      <th>Loaned by</th>
       <th></th>
     </thead>
     <tbody>
@@ -26,6 +27,12 @@
         <td th:text="${tempBook.copiesPurchased}"></td>
         <td th:text="${tempBook.copiesPurchased-tempBook.copiesAvailable}"></td>
         <td>
+          <span th:each="loan, index : ${tempBook.loans}"><span th:text="!${index.last} ? ${loan.user.firstName} + ', ' : ${loan.user.firstName}"></span></span>
+        </td>
+        <td>
+          <a th:if="${#lists.isEmpty(tempBook.loans)}" th:href="@{/book/delete(bookId=${tempBook.id})}" class="btn btn-sm btn-danger">
+            Delete
+          </a>
         </td>
       </tr>
     </tbody>
