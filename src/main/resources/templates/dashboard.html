@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Library Management</title>
+  <link rel="stylesheet" href="/css/bootstrap_v4.css">
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+<div class="container">
+  <h3>Library Management - Dashboard</h3>
+  <hr>
+  <a th:href="@{/user/addUserForm}" class="btn btn-primary btn-sm mb-3">Create new user</a>
+  <a th:href="@{/book/addBookForm}" class="btn btn-primary btn-sm mb-3">Create new book</a>
+  <a th:href="@{/user/manageUsersForm}" class="btn btn-primary btn-sm mb-3">Manage users</a>
+  <a th:href="@{/book/manageBooksForm}" class="btn btn-primary btn-sm mb-3">Manage books</a>
+  <a th:href="@{/loan/loanBookForm}" class="btn btn-primary btn-sm mb-3">Loan a book</a>
+  <a th:href="@{/loan/returnBookForm}" class="btn btn-primary btn-sm mb-3">Return a book</a>
+</div>
+</body>
+</html>

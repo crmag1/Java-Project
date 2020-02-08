@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Library Management</title>
+  <link rel="stylesheet" href="/css/bootstrap_v4.css">
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+<div class="container">
+  <h3>Library Management - Add User</h3>
+  </br>
+  <form action="#" th:action="@{/user/save}" th:object="${user}" method="POST">
+    <input type="text" th:field="*{firstName}" class="form-control mb-4 col-4" placeholder="First name"/>
+    <input type="text" th:field="*{lastName}" class="form-control mb-4 col-4" placeholder="Last name"/>
+    <input type="text" th:field="*{address}" class="form-control mb-4 col-4" placeholder="Address"/>
+    <hr>
+    <button type="submit" class="btn btn-primary btn-sm mb-3">Save</button>
+    <a th:href="@{/dashboard}" class="btn btn-dark btn-sm mb-3">Cancel</a>
+  </form>
+</div>
+</body>
+</html>

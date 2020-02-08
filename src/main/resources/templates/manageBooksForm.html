@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Library Management</title>
+  <link rel="stylesheet" href="/css/bootstrap_v4.css">
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+<div class="container">
+  <h3>Library Management - Manage Book</h3>
+  </br>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <th>Name</th>
+      <th>Summary</th>
+      <th>ISBN</th>
+      <th>Total copies</th>
+      <th>Copies on loan</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr th:each="tempBook : ${books}">
+        <td th:text="${tempBook.name}"></td>
+        <td th:text="${tempBook.summary}"></td>
+        <td th:text="${tempBook.isbn}"></td>
+        <td th:text="${tempBook.copiesPurchased}"></td>
+        <td th:text="${tempBook.copiesPurchased-tempBook.copiesAvailable}"></td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <hr>
+  <a th:href="@{/dashboard}" class="btn btn-dark btn-sm mb-3">Return</a>
+</div>
+</body>
+</html>

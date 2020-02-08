@@ -9,11 +9,11 @@ import javax.persistence.Id;
 public class Book {
 
   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
   private String name;
   private String summary;
-  private String ISBN;
+  private String isbn;
   private int copiesPurchased;
   private int copiesAvailable;
 
@@ -21,11 +21,11 @@ public class Book {
     // no-args constructor
   }
 
-  public Book(Long id, String name, String summary, String ISBN, int copiesPurchased, int copiesAvailable) {
+  public Book(Long id, String name, String summary, String isbn, int copiesPurchased, int copiesAvailable) {
     this.id = id;
     this.name = name;
     this.summary = summary;
-    this.ISBN = ISBN;
+    this.isbn = isbn;
     this.copiesPurchased = copiesPurchased;
     this.copiesAvailable = copiesAvailable;
   }
@@ -54,12 +54,12 @@ public class Book {
     this.summary = summary;
   }
 
-  public String getISBN() {
-    return ISBN;
+  public String getIsbn() {
+    return isbn;
   }
 
-  public void setISBN(String ISBN) {
-    this.ISBN = ISBN;
+  public void setIsbn(String isbn) {
+    this.isbn = isbn;
   }
 
   public int getCopiesPurchased() {
