@@ -1,12 +1,16 @@
 package com.persado.assignment.project.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Book {
+public class Book implements Serializable {
 
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -17,17 +21,22 @@ public class Book {
   private int copiesPurchased;
   private int copiesAvailable;
 
+  @OneToMany(mappedBy="book")
+  @JsonManagedReference
+  private List<Loan> loans;
+
   public Book() {
     // no-args constructor
   }
 
-  public Book(Long id, String name, String summary, String isbn, int copiesPurchased, int copiesAvailable) {
+  public Book(Long id, String name, String summary, String isbn, int copiesPurchased, int copiesAvailable, List<Loan> loans) {
     this.id = id;
     this.name = name;
     this.summary = summary;
     this.isbn = isbn;
     this.copiesPurchased = copiesPurchased;
     this.copiesAvailable = copiesAvailable;
+    this.loans = loans;
   }
 
   public Long getId() {
@@ -76,5 +85,13 @@ public class Book {
 
   public void setCopiesAvailable(int copiesAvailable) {
     this.copiesAvailable = copiesAvailable;
+  }
+
+  public List<Loan> getLoans() {
+    return loans;
+  }
+
+  public void setLoans(List<Loan> loans) {
+    this.loans = loans;
   }
 }

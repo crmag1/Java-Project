@@ -1,15 +1,18 @@
 package com.persado.assignment.project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Loan {
+public class Loan implements Serializable {
 
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -17,12 +20,13 @@ public class Loan {
   private LocalDate loanDate;
   private LocalDate returnDate;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
 
-  @OneToOne
+  @ManyToOne(fetch=FetchType.LAZY)
   @JoinColumn(name = "book_id", referencedColumnName = "id")
+  @JsonBackReference
   private Book book;
 
   public Loan() {
