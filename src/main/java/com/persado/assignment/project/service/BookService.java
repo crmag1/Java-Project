@@ -18,4 +18,12 @@ public interface BookService {
    * @param book Book
    */
   public void save(Book book);
+
+  /**
+   * Get the Book with the given id, if is it currently
+   * not on loan delete it.
+   *
+   * @param id Book id
+   */
+  public void delete(Long id);
 }

@@ -32,7 +32,7 @@
         <td>
           <a th:if="${#lists.isEmpty(tempBook.loans)}" th:href="@{/book/delete(bookId=${tempBook.id})}"
              th:onclick="return confirm('Are you sure you want to delete this book?');" class="btn btn-sm btn-danger">
-            Delete
+            Delete this book
           </a>
         </td>
       </tr>

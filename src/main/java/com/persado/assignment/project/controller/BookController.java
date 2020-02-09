@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/book")
@@ -58,6 +59,18 @@ public class BookController {
   public String save(@ModelAttribute("book") Book book) {
     bookService.save(book);
     return "redirect:/dashboard";
+  }
+
+  /**
+   * Delete the Book with the given id.
+   *
+   * @param id Book id
+   * @return The html page to be opened.
+   */
+  @GetMapping("/delete")
+  public String delete(@RequestParam("bookId") Long id) {
+    bookService.delete(id);
+    return "redirect:/book/manageBooksForm";
   }
 
 }
