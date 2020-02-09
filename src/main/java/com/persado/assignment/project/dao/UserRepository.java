@@ -38,4 +38,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @Query("SELECT COUNT(u.id) FROM User u LEFT JOIN Loan l ON l.user.id = u.id "
     + "WHERE l.returnDate IS NULL AND l.user.id=?1")
   int getNumberOfLoans(Long id);
+
+  /**
+   * Find the users that have currently on loan the book
+   * with the given id.
+   *
+   * @param id Book id
+   * @return List of users
+   */
+  @Query("SELECT DISTINCT u FROM User u WHERE u.id IN "
+    + "(SELECT u.id FROM User u LEFT JOIN Loan l ON l.user.id = u.id "
+    + "WHERE l.book.id=?1 AND l.returnDate IS NULL)")
+  List<User> getUsersLoanedBook(Long id);
 }

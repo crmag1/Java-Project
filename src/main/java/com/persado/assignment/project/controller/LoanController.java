@@ -42,7 +42,11 @@ public class LoanController {
    * @return
    */
   @GetMapping("/returnBookForm")
-  public String showReturnBookForm() {
+  public String showReturnBookForm(Model model) {
+    // Get all the books that are currently on loan
+    List<Book> books = loanService.findBooksForReturn();
+    // Add the books attribute to the model
+    model.addAttribute("books", books);
     return "returnBookForm";
   }
 
@@ -58,6 +62,19 @@ public class LoanController {
   public String save(@RequestParam("bookId") Long bookId, @RequestParam("userId") Long userId) {
     loanService.createLoan(bookId, userId);
     return "redirect:/loan/loanBookForm";
+  }
+
+  /**
+   * Complete a loan with the Book and User with the given ids.
+   *
+   * @param bookId Book id
+   * @param userId User id
+   * @return The html page to be redirected.
+   */
+  @PostMapping("/complete")
+  public String completeLoan(@RequestParam("bookId") Long bookId, @RequestParam("userId") Long userId) {
+    loanService.completeLoan(bookId, userId);
+    return "redirect:/loan/returnBookForm";
   }
 
 }

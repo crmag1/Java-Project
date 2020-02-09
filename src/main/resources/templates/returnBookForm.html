@@ -8,6 +8,32 @@
 <body>
 <div class="container">
   <h3>Library Management - Return Book</h3>
+  </br>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <th>Name</th>
+    <th>Loaned to</th>
+    <th></th>
+    </thead>
+    <tbody>
+    <tr th:each="tempBook : ${books}">
+      <form action="#" th:action="@{/loan/complete}" method="POST">
+        <td th:text="${tempBook.name}"></td>
+        <td>
+          <select class="form-control form-control-sm" th:name="userId">
+            <option value="0">Select User</option>
+            <option th:each="i : ${tempBook.availableUsers}" th:value="${i.id}" th:text="${i.firstName}"></option>
+          </select>
+        </td>
+        <td>
+          <button type="submit" class="btn btn-primary btn-sm mb-3">Register Return</button>
+        </td>
+        <!-- Keep in this hidden input the id of the book in order to pass it into the return loan action -->
+        <input type="hidden" th:value="${tempBook.id}" name="bookId"/>
+      </form>
+    </tr>
+    </tbody>
+  </table>
   <hr>
   <a th:href="@{/dashboard}" class="btn btn-dark btn-sm mb-3">Return</a>
 </div>

@@ -2,6 +2,7 @@ package com.persado.assignment.project.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -92,7 +93,13 @@ public class Book implements Serializable {
   }
 
   public List<Loan> getLoans() {
-    return loans;
+    List<Loan> validLoans = new ArrayList<>();
+    for(int i = 0; i < loans.size(); i++) {
+      if(loans.get(i).getReturnDate() == null) {
+        validLoans.add(loans.get(i));
+      }
+    }
+    return validLoans;
   }
 
   public void setLoans(List<Loan> loans) {

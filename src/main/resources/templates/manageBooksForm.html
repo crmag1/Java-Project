@@ -27,7 +27,9 @@
         <td th:text="${tempBook.copiesPurchased}"></td>
         <td th:text="${tempBook.copiesPurchased-tempBook.copiesAvailable}"></td>
         <td>
-          <span th:each="loan, index : ${tempBook.loans}"><span th:text="!${index.last} ? ${loan.user.firstName} + ', ' : ${loan.user.firstName}"></span></span>
+          <span th:each="loan, index : ${tempBook.loans}">
+            <span th:text="!${index.last} ? ${loan.user.firstName} + ', ' : ${loan.user.firstName}"></span>
+          </span>
         </td>
         <td>
           <a th:if="${#lists.isEmpty(tempBook.loans)}" th:href="@{/book/delete(bookId=${tempBook.id})}"
