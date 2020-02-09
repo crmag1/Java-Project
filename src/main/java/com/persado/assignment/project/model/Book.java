@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Book implements Serializable {
@@ -20,6 +21,9 @@ public class Book implements Serializable {
   private String isbn;
   private int copiesPurchased;
   private int copiesAvailable;
+
+  @Transient
+  List<User> availableUsers;
 
   @OneToMany(mappedBy="book")
   @JsonManagedReference
@@ -93,5 +97,13 @@ public class Book implements Serializable {
 
   public void setLoans(List<Loan> loans) {
     this.loans = loans;
+  }
+
+  public List<User> getAvailableUsers() {
+    return availableUsers;
+  }
+
+  public void setAvailableUsers(List<User> availableUsers) {
+    this.availableUsers = availableUsers;
   }
 }

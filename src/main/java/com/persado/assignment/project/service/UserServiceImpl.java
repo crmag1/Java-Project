@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
   public String delete(Long id) {
     StringBuilder errorMessage = new StringBuilder();
     // Get the Loans for the User with the given id.
-    List<Loan> loans = loanRepository.findByUserId(id);
+    List<Loan> loans = loanRepository.findByUserIdAndReturnDateIsNull(id);
     // If the User has books on loan, create a String with the name of the books.
     for(int i = 0; i < loans.size(); i++) {
       if(StringUtils.isEmpty(errorMessage.toString())) {

@@ -41,6 +41,12 @@ public class Loan implements Serializable {
     this.book = book;
   }
 
+  public Loan(LocalDate loanDate, User user, Book book) {
+    this.loanDate = loanDate;
+    this.user = user;
+    this.book = book;
+  }
+
   public Long getId() {
     return id;
   }
