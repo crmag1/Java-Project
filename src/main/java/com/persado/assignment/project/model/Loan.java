@@ -22,6 +22,7 @@ public class Loan implements Serializable {
 
   @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id")
+  @JsonBackReference
   private User user;
 
   @ManyToOne(fetch=FetchType.LAZY)
