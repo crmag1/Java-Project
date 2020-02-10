@@ -104,7 +104,7 @@ public class LoanServiceImpl implements LoanService {
       throw new RuntimeException("User with id : " + userId + " already has 3 books on loan.");
     }
 
-    List<Loan> existingLoans = loanRepository.findByUserIdAndBookIdAndReturnDateIsNull(bookId, userId);
+    List<Loan> existingLoans = loanRepository.findByUserIdAndBookIdAndReturnDateIsNull(userId, bookId);
     if(existingLoans.size() > 0) {
       throw new RuntimeException("This loan already exists.");
     }

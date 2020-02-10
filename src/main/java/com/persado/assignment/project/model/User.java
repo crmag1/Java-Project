@@ -1,10 +1,14 @@
 package com.persado.assignment.project.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Length;
@@ -26,6 +30,10 @@ public class User implements Serializable {
 
   @Length(min = 0, max = 255, message="Address should not be more than 255 characters.")
   private String address;
+
+  @OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
+  @JsonManagedReference
+  private List<Loan> loans;
 
   public User() {
     // no-args constructor
