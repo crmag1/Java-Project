@@ -3,8 +3,10 @@ package com.persado.assignment.project.controller;
 import com.persado.assignment.project.model.Book;
 import com.persado.assignment.project.service.BookService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,7 +58,12 @@ public class BookController {
    * @return The html page to be redirected.
    */
   @PostMapping("/save")
-  public String save(@ModelAttribute("book") Book book) {
+  public String save(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
+
+    if (bindingResult.hasErrors()) {
+      return "addBookForm";
+    }
+
     bookService.save(book);
     return "redirect:/dashboard";
   }

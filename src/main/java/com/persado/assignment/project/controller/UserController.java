@@ -3,9 +3,11 @@ package com.persado.assignment.project.controller;
 import com.persado.assignment.project.model.User;
 import com.persado.assignment.project.service.UserService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,7 +62,12 @@ public class UserController {
    * @return The html page to be redirected.
    */
   @PostMapping("/save")
-  public String save(@ModelAttribute("user") User user) {
+  public String save(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+
+    if (bindingResult.hasErrors()) {
+      return "addUserForm";
+    }
+
     userService.save(user);
     return "redirect:/dashboard";
   }
