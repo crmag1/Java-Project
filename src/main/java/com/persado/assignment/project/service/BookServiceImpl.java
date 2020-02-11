@@ -1,6 +1,6 @@
 package com.persado.assignment.project.service;
 
-import com.persado.assignment.project.dao.BookRepository;
+import com.persado.assignment.project.repository.BookRepository;
 import com.persado.assignment.project.model.Book;
 import java.util.List;
 import java.util.Optional;

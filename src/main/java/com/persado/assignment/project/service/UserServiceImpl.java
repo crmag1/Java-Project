@@ -1,7 +1,7 @@
 package com.persado.assignment.project.service;
 
-import com.persado.assignment.project.dao.LoanRepository;
-import com.persado.assignment.project.dao.UserRepository;
+import com.persado.assignment.project.repository.LoanRepository;
+import com.persado.assignment.project.repository.UserRepository;
 import com.persado.assignment.project.model.Loan;
 import com.persado.assignment.project.model.User;
 import java.util.List;

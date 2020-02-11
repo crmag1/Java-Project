@@ -1,4 +1,4 @@
-package com.persado.assignment.project.dao;
+package com.persado.assignment.project.repository;
 
 import com.persado.assignment.project.model.Book;
 import java.util.List;
