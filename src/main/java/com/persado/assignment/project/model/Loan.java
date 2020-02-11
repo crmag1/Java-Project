@@ -3,6 +3,7 @@ package com.persado.assignment.project.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.time.LocalDate;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,8 @@ public class Loan implements Serializable {
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
+
+  @Column(nullable = false)
   private LocalDate loanDate;
   private LocalDate returnDate;
 

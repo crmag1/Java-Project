@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,16 +24,18 @@ public class User implements Serializable {
 
   @NotNull(message="First Name should not be null.")
   @Size(min=2, max=100, message="Last Name should at least 2 characters long.")
+  @Column(nullable = false)
   private String firstName;
 
   @NotNull(message="Last Name should not be null.")
   @Size(min=2, max=100, message="Last Name should at least 2 characters long.")
+  @Column(nullable = false)
   private String lastName;
 
   @Length(min = 0, max = 255, message="Address should not be more than 255 characters.")
   private String address;
 
-  @OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy="user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   @JsonManagedReference
   private List<Loan> loans;
 

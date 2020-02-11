@@ -5,7 +5,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,7 @@ public class Book implements Serializable {
 
   @NotNull(message="Name should not be null.")
   @Size(min=2, max=100, message="Last Name should at least 2 characters long.")
+  @Column(nullable = false)
   private String name;
 
   @Length(min = 0, max = 255, message="Summary should not be more than 255 characters.")
@@ -34,17 +37,19 @@ public class Book implements Serializable {
   @NotNull
   @Pattern(regexp = "[\\s]*[0-9]*[1-9]+", message="Only numbers are allowed.")
   @Size(min=10, max=10, message="ISBN should be exactly 10 numbers.")
+  @Column(nullable = false)
   private String isbn;
 
   @NotNull(message="Copies Purchased should not be null.")
   @Range(min = 1, message="Copies Purchased should be at least 1.")
+  @Column(nullable = false)
   private int copiesPurchased;
   private int copiesAvailable;
 
   @Transient
   List<User> availableUsers;
 
-  @OneToMany(mappedBy="book", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy="book", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   @JsonManagedReference
   private List<Loan> loans;
 
