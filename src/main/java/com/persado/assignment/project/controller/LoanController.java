@@ -1,8 +1,9 @@
 package com.persado.assignment.project.controller;
 
-import com.persado.assignment.project.model.Book;
+import com.persado.assignment.project.dto.BookDTO;
 import com.persado.assignment.project.service.LoanService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class LoanController {
 
   private LoanService loanService;
 
+  @Autowired
   public LoanController(LoanService loanService) {
     this.loanService = loanService;
   }
@@ -30,23 +32,25 @@ public class LoanController {
   @GetMapping("/loanBookForm")
   public String showLoanBookForm(Model model) {
     // Get all the books that are available
-    List<Book> books = loanService.findBooksForLoan();
+    List<BookDTO> bookDTOs = loanService.findBooksForLoan();
     // Add the books attribute to the model
-    model.addAttribute("books", books);
+    model.addAttribute("books", bookDTOs);
     return "loanBookForm";
   }
 
   /**
+   * Get all books that can be returned and then open
+   * the return book form.
    *
-   *
-   * @return
+   * @param model Model
+   * @return The html page to be opened.
    */
   @GetMapping("/returnBookForm")
   public String showReturnBookForm(Model model) {
     // Get all the books that are currently on loan
-    List<Book> books = loanService.findBooksForReturn();
+    List<BookDTO> bookDTOs = loanService.findBooksForReturn();
     // Add the books attribute to the model
-    model.addAttribute("books", books);
+    model.addAttribute("books", bookDTOs);
     return "returnBookForm";
   }
 

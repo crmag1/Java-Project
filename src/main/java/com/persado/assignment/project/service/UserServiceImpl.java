@@ -1,5 +1,7 @@
 package com.persado.assignment.project.service;
 
+import com.persado.assignment.project.dto.UserDTO;
+import com.persado.assignment.project.mapper.UserMapper;
 import com.persado.assignment.project.repository.LoanRepository;
 import com.persado.assignment.project.repository.UserRepository;
 import com.persado.assignment.project.model.Loan;
@@ -12,19 +14,28 @@ import org.springframework.util.StringUtils;
 @Service
 public class UserServiceImpl implements UserService {
 
-  @Autowired
   private UserRepository userRepository;
+  private LoanRepository loanRepository;
+  private UserMapper userMapper;
 
   @Autowired
-  private LoanRepository loanRepository;
-
-  @Override
-  public List<User> findAll() {
-    return userRepository.findAll();
+  public UserServiceImpl(
+    UserRepository userRepository,
+    LoanRepository loanRepository,
+    UserMapper userMapper) {
+    this.userRepository = userRepository;
+    this.loanRepository = loanRepository;
+    this.userMapper = userMapper;
   }
 
   @Override
-  public void save(User user) {
+  public List<UserDTO> findAll() {
+    return userMapper.usersToUserDtos(userRepository.findAll());
+  }
+
+  @Override
+  public void save(UserDTO userDTO) {
+    User user = userMapper.userDtoToUser(userDTO);
     userRepository.save(user);
   }
 

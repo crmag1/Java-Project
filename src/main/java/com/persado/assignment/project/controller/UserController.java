@@ -1,9 +1,10 @@
 package com.persado.assignment.project.controller;
 
-import com.persado.assignment.project.model.User;
+import com.persado.assignment.project.dto.UserDTO;
 import com.persado.assignment.project.service.UserService;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -21,6 +22,7 @@ public class UserController {
 
   private UserService userService;
 
+  @Autowired
   public UserController(UserService userService) {
     this.userService = userService;
   }
@@ -34,9 +36,9 @@ public class UserController {
   @GetMapping("/addUserForm")
   public String showAddUserForm(Model model) {
     // Create a new User in order to pass it into the add user form
-    User user = new User();
+    UserDTO userDTO = new UserDTO();
     // Add the user attribute to the Model
-    model.addAttribute("user", user);
+    model.addAttribute("user", userDTO);
     return "addUserForm";
   }
 
@@ -49,26 +51,26 @@ public class UserController {
   @GetMapping("/manageUsersForm")
   public String showManageUsersForm(Model model) {
     // Get all the Users
-    List<User> users = userService.findAll();
+    List<UserDTO> userDTOs = userService.findAll();
     // Add the users attribute to the Model
-    model.addAttribute("users", users);
+    model.addAttribute("users", userDTOs);
     return "manageUsersForm";
   }
 
   /**
    * Save the given User.
    *
-   * @param user The User to be saved.
+   * @param userDTO The User to be saved.
    * @return The html page to be redirected.
    */
   @PostMapping("/save")
-  public String save(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+  public String save(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult bindingResult) {
 
     if (bindingResult.hasErrors()) {
       return "addUserForm";
     }
 
-    userService.save(user);
+    userService.save(userDTO);
     return "redirect:/dashboard";
   }
 
@@ -90,9 +92,9 @@ public class UserController {
     }
 
     // Get all the Users
-    List<User> users = userService.findAll();
+    List<UserDTO> userDTOs = userService.findAll();
     // Add the users object to the Model
-    model.addObject("users", users);
+    model.addObject("users", userDTOs);
 
     model.setViewName("manageUsersForm");
     return model;

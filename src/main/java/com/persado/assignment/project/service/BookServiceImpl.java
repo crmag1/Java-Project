@@ -1,5 +1,7 @@
 package com.persado.assignment.project.service;
 
+import com.persado.assignment.project.dto.BookDTO;
+import com.persado.assignment.project.mapper.BookMapper;
 import com.persado.assignment.project.repository.BookRepository;
 import com.persado.assignment.project.model.Book;
 import java.util.List;
@@ -10,16 +12,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookServiceImpl implements BookService {
 
-  @Autowired
   private BookRepository bookRepository;
+  private BookMapper bookMapper;
 
-  @Override
-  public List<Book> findAll() {
-    return bookRepository.findAll();
+  @Autowired
+  public BookServiceImpl(
+    BookRepository bookRepository,
+    BookMapper bookMapper) {
+    this.bookRepository = bookRepository;
+    this.bookMapper = bookMapper;
   }
 
   @Override
-  public void save(Book book) {
+  public List<BookDTO> findAll() {
+    return bookMapper.booksToBookDtos(bookRepository.findAll());
+  }
+
+  @Override
+  public void save(BookDTO bookDTO) {
+    Book book = bookMapper.bookDtoToBook(bookDTO);
     if (book.getId() == null) {
       book.setCopiesAvailable(book.getCopiesPurchased());
     }

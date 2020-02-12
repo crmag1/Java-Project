@@ -1,6 +1,6 @@
 package com.persado.assignment.project.service;
 
-import com.persado.assignment.project.model.User;
+import com.persado.assignment.project.dto.UserDTO;
 import java.util.List;
 
 public interface UserService {
@@ -10,14 +10,14 @@ public interface UserService {
    *
    * @return A List of Users
    */
-  public List<User> findAll();
+  public List<UserDTO> findAll();
 
   /**
    * Save the given User.
    *
-   * @param user User
+   * @param userDTO UserDTO
    */
-  public void save(User user);
+  public void save(UserDTO userDTO);
 
   /**
    * Check that the User with the given id does not have any books on loan

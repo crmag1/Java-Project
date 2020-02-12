@@ -11,9 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class User implements Serializable {
@@ -22,17 +19,11 @@ public class User implements Serializable {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull(message="First Name should not be null.")
-  @Size(min=2, max=100, message="Last Name should at least 2 characters long.")
   @Column(nullable = false)
   private String firstName;
 
-  @NotNull(message="Last Name should not be null.")
-  @Size(min=2, max=100, message="Last Name should at least 2 characters long.")
   @Column(nullable = false)
   private String lastName;
-
-  @Length(min = 0, max = 255, message="Address should not be more than 255 characters.")
   private String address;
 
   @OneToMany(mappedBy="user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
@@ -80,5 +71,13 @@ public class User implements Serializable {
 
   public void setAddress(String address) {
     this.address = address;
+  }
+
+  public List<Loan> getLoans() {
+    return loans;
+  }
+
+  public void setLoans(List<Loan> loans) {
+    this.loans = loans;
   }
 }

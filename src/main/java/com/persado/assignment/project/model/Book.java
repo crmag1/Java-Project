@@ -12,12 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
 
 @Entity
 public class Book implements Serializable {
@@ -26,28 +20,16 @@ public class Book implements Serializable {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull(message="Name should not be null.")
-  @Size(min=2, max=100, message="Last Name should at least 2 characters long.")
   @Column(nullable = false)
   private String name;
-
-  @Length(min = 0, max = 255, message="Summary should not be more than 255 characters.")
   private String summary;
 
-  @NotNull
-  @Pattern(regexp = "[\\s]*[0-9]*[1-9]+", message="Only numbers are allowed.")
-  @Size(min=10, max=10, message="ISBN should be exactly 10 numbers.")
   @Column(nullable = false)
   private String isbn;
 
-  @NotNull(message="Copies Purchased should not be null.")
-  @Range(min = 1, message="Copies Purchased should be at least 1.")
   @Column(nullable = false)
   private int copiesPurchased;
   private int copiesAvailable;
-
-  @Transient
-  List<User> availableUsers;
 
   @OneToMany(mappedBy="book", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   @JsonManagedReference
@@ -127,13 +109,5 @@ public class Book implements Serializable {
 
   public void setLoans(List<Loan> loans) {
     this.loans = loans;
-  }
-
-  public List<User> getAvailableUsers() {
-    return availableUsers;
-  }
-
-  public void setAvailableUsers(List<User> availableUsers) {
-    this.availableUsers = availableUsers;
   }
 }

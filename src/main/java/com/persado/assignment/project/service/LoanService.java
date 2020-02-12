@@ -1,6 +1,6 @@
 package com.persado.assignment.project.service;
 
-import com.persado.assignment.project.model.Book;
+import com.persado.assignment.project.dto.BookDTO;
 import java.util.List;
 
 public interface LoanService {
@@ -10,14 +10,14 @@ public interface LoanService {
    *
    * @return A List of Books
    */
-  public List<Book> findBooksForLoan();
+  public List<BookDTO> findBooksForLoan();
 
   /**
    * Get All Books for Return.
    *
    * @return A List of Books
    */
-  public List<Book> findBooksForReturn();
+  public List<BookDTO> findBooksForReturn();
 
   /**
    * Get the Book and User with the given ids, check that the User and the Book are

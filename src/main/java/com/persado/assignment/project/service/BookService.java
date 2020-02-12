@@ -1,6 +1,6 @@
 package com.persado.assignment.project.service;
 
-import com.persado.assignment.project.model.Book;
+import com.persado.assignment.project.dto.BookDTO;
 import java.util.List;
 
 public interface BookService {
@@ -8,16 +8,16 @@ public interface BookService {
   /**
    * Get All Books.
    *
-   * @return A List of Books
+   * @return A DTO List of Books
    */
-  public List<Book> findAll();
+  public List<BookDTO> findAll();
 
   /**
    * Save the given Book.
    *
-   * @param book Book
+   * @param bookDTO BookDTO
    */
-  public void save(Book book);
+  public void save(BookDTO bookDTO);
 
   /**
    * Get the Book with the given id, if is it currently

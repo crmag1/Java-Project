@@ -1,9 +1,10 @@
 package com.persado.assignment.project.controller;
 
-import com.persado.assignment.project.model.Book;
+import com.persado.assignment.project.dto.BookDTO;
 import com.persado.assignment.project.service.BookService;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ public class BookController {
 
   private BookService bookService;
 
+  @Autowired
   public BookController(BookService bookService) {
     this.bookService = bookService;
   }
@@ -31,7 +33,7 @@ public class BookController {
    */
   @GetMapping("/addBookForm")
   public String showAddBookForm(Model model) {
-    Book book = new Book();
+    BookDTO book = new BookDTO();
     model.addAttribute("book", book);
     return "addBookForm";
   }
@@ -45,26 +47,26 @@ public class BookController {
   @GetMapping("/manageBooksForm")
   public String showManageBooksForm(Model model) {
     // Get all the Books
-    List<Book> books = bookService.findAll();
+    List<BookDTO> bookDTOs = bookService.findAll();
     // Add the books attribute to the Model
-    model.addAttribute("books", books);
+    model.addAttribute("books", bookDTOs);
     return "manageBooksForm";
   }
 
   /**
    * Save the given Book.
    *
-   * @param book The Book to be saved.
+   * @param bookDTO The Book to be saved.
    * @return The html page to be redirected.
    */
   @PostMapping("/save")
-  public String save(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
+  public String save(@ModelAttribute("book") @Valid BookDTO bookDTO, BindingResult bindingResult) {
 
     if (bindingResult.hasErrors()) {
       return "addBookForm";
     }
 
-    bookService.save(book);
+    bookService.save(bookDTO);
     return "redirect:/dashboard";
   }
 

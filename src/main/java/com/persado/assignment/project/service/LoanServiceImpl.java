@@ -1,5 +1,8 @@
 package com.persado.assignment.project.service;
 
+import com.persado.assignment.project.dto.BookDTO;
+import com.persado.assignment.project.mapper.BookMapper;
+import com.persado.assignment.project.mapper.UserMapper;
 import com.persado.assignment.project.repository.BookRepository;
 import com.persado.assignment.project.repository.LoanRepository;
 import com.persado.assignment.project.repository.UserRepository;
@@ -14,44 +17,55 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoanServiceImpl implements LoanService {
 
-  @Autowired
   private LoanRepository loanRepository;
-
-  @Autowired
   private BookRepository bookRepository;
+  private UserRepository userRepository;
+  private BookMapper bookMapper;
+  private UserMapper userMapper;
 
   @Autowired
-  private UserRepository userRepository;
+  public LoanServiceImpl(
+    LoanRepository loanRepository,
+    BookRepository bookRepository,
+    UserRepository userRepository,
+    BookMapper bookMapper,
+    UserMapper userMapper) {
+    this.loanRepository = loanRepository;
+    this.bookRepository = bookRepository;
+    this.userRepository = userRepository;
+    this.bookMapper = bookMapper;
+    this.userMapper = userMapper;
+  }
 
   @Override
-  public List<Book> findBooksForLoan() {
+  public List<BookDTO> findBooksForLoan() {
     // Get all the books with available copies
-    List<Book> books = bookRepository.findByCopiesAvailableGreaterThan(0);
+    List<BookDTO> bookDTOs = bookMapper.booksToBookDtos(bookRepository.findByCopiesAvailableGreaterThan(0));
     // Get all the users that are available for loan
     List<User> usersAvailableForLoan = userRepository.getUsersAvailableForLoan();
 
     // For each book get its users
-    for (int i = 0; i < books.size(); i++) {
-      List<User> users = userRepository.getUsersAvailableForGivenBook(books.get(i).getId());
+    for (int i = 0; i < bookDTOs.size(); i++) {
+      List<User> users = userRepository.getUsersAvailableForGivenBook(bookDTOs.get(i).getId());
       users.retainAll(usersAvailableForLoan);
-      books.get(i).setAvailableUsers(users);
+      bookDTOs.get(i).setAvailableUsers(userMapper.usersToUserDtos(users));
     }
 
-    return books;
+    return bookDTOs;
   }
 
   @Override
-  public List<Book> findBooksForReturn() {
+  public List<BookDTO> findBooksForReturn() {
     // Get all books that are currently on loan
-    List<Book> books = bookRepository.getAllBooksThatAreOnLoan();
+    List<BookDTO> bookDTOs = bookMapper.booksToBookDtos(bookRepository.getAllBooksThatAreOnLoan());
 
     // For each book get its users
-    for (int i = 0; i < books.size(); i++) {
-      List<User> users = userRepository.getUsersLoanedBook(books.get(i).getId());
-      books.get(i).setAvailableUsers(users);
+    for (int i = 0; i < bookDTOs.size(); i++) {
+      List<User> users = userRepository.getUsersLoanedBook(bookDTOs.get(i).getId());
+      bookDTOs.get(i).setAvailableUsers(userMapper.usersToUserDtos(users));
     }
 
-    return books;
+    return bookDTOs;
   }
 
   @Override
